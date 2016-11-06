@@ -4,10 +4,27 @@ import java.sql.SQLException;
 
 import cn.zlb.goods.book.dao.BookDao;
 import cn.zlb.goods.book.domin.Book;
+import cn.zlb.goods.book.exception.SqlNullException;
 import cn.zlb.goods.pager.PagerBean;
-
+import cn.zlb.goods.book.exception.*;
 public class BookService {
 	private BookDao dao=new BookDao();
+	/**
+	 * 一。按照bid查询
+	 
+	 */
+	public Book findById(String bid )   {
+		Book book=null;
+		try {
+			book = dao.findById(bid );
+		} catch (SQLException e) {
+		   e.printStackTrace();
+		}
+		 
+		return book;
+		
+	}
+	//--------------------------------------------------------------------------
 	/**
 	 * 1.0按照分类查询
 	 * @param cid

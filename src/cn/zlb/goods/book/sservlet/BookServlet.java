@@ -1,5 +1,7 @@
 package cn.zlb.goods.book.sservlet;
 
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +13,26 @@ import cn.zlb.goods.pager.PagerBean;
 
 public class BookServlet  extends BaseServlet{
 	private BookService service =new BookService();
-	
+	/**
+	 * 1.0 按照bid查询
+	 */
+	public String findByBid(HttpServletRequest req,HttpServletResponse resp)
+	throws ServletException{
+		String bid=req.getParameter("bid");
+		Book book=service.findById(bid );
+		req.setAttribute("book", book);
+		return "f:/jsps/book/desc.jsp";
+		
+		
+	}
+	//--------------------------------------------------------------------------
+	/**
+	 * 按照目录分页查询
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 */
 	public String findCategory(HttpServletRequest req,HttpServletResponse resp) 
 	throws ServletException{
 		/**
@@ -37,7 +58,11 @@ public class BookServlet  extends BaseServlet{
 		
 		
 	}
-
+	/**
+	 * 获取请求的url
+	 * @param req
+	 * @return
+	 */
 	private String getURI(HttpServletRequest req) {
 		//getQueryString()：获得查询字符串：“?号以后的字符串不包含问号”---getRequestURI()：获取发出请求字符串的客户端地址
 		String uri=req.getRequestURI()+"?"+req.getQueryString();
@@ -60,7 +85,11 @@ public class BookServlet  extends BaseServlet{
 		 * subString()=/goods/BookServlet+method+findByCategory;
 		 */
 	}
-
+	/**
+	 * 获取请求中的页码
+	 * @param req
+	 * @return
+	 */
 	private int getPc(HttpServletRequest req){
 		//默认页码为1
 		int pc=1;

@@ -4,16 +4,39 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
  
+
+import java.util.Map;
+
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import cn.itcast.commons.CommonUtils;
 import cn.itcast.jdbc.TxQueryRunner;
 import cn.zlb.goods.book.domin.Book;
 import cn.zlb.goods.book.pager.PageConstant;
+import cn.zlb.goods.category.domin.Category;
 import cn.zlb.goods.pager.PagerBean;
 
 public class BookDao {
 	private TxQueryRunner qr=new TxQueryRunner();
+	/**
+	 * 一：按照bid查询,结果唯一
+	 * @throws SQLException 
+	 * 
+	 */
+	public Book findById(String bid ) throws SQLException{
+		String sql="select * from t_book where bid=?";
+		Map<String, Object> map= qr.query(sql, new MapHandler(),bid);
+		//把map转换为bean
+		Book book =CommonUtils.toBean(map, Book.class);
+		//从map中获取目录id  ，并封装到Category
+		Category cate=CommonUtils.toBean(map, Category.class);
+		book.setCategory(cate);
+		 
+		return book;
+	}
+	//--------------------------------------------------------------------------
 	/**
 	 * 1.0按分类目录查询
 	 * @throws SQLException 
@@ -113,7 +136,7 @@ public class BookDao {
 			 if (!exp.getOperator().equalsIgnoreCase("is null")) {
 				//如果不是is null 那么添加一个 ？ 占位符
 				 whereSql.append("?");
-				 //把表达式中的，要进行判断的值 取出，添加到 params 中
+				  //把表达式中的，要进行判断的值 取出，添加到 params 中
 				 params.add(exp.getValue());
 			}
 		}
