@@ -6,21 +6,23 @@
 
 	<!--book分类分页查询 -->
 	<servlet>
-		<servlet-name>BookServlet</servlet-name>
-		<servlet-class>cn.zlb.goods.book.sservlet.BookServlet</servlet-class>
+			<servlet-name>BookServlet</servlet-name>
+			<servlet-class>cn.zlb.goods.book.sservlet.BookServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>BookServlet</servlet-name>
-		<url-pattern>/BookServlet</url-pattern>
+			<servlet-name>BookServlet</servlet-name>
+			<url-pattern>/BookServlet</url-pattern>
 	</servlet-mapping>
+	
+	
 	<!--ajax异步校验的servlet配置 -->
 	<servlet>
-		<servlet-name>userServlet</servlet-name>
-		<servlet-class>cn.zlb.goods.user.web.userServlet</servlet-class>
+			<servlet-name>userServlet</servlet-name>
+			<servlet-class>cn.zlb.goods.user.web.userServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>userServlet</servlet-name>
-		<url-pattern>/userServlet</url-pattern>
+			<servlet-name>userServlet</servlet-name>
+			<url-pattern>/userServlet</url-pattern>
 	</servlet-mapping>
 
 
@@ -34,21 +36,30 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>VerifyCodeServlet</servlet-name>
-		<url-pattern>/VerifyCodeServlet</url-pattern>
+			<servlet-name>VerifyCodeServlet</servlet-name>
+			<url-pattern>/VerifyCodeServlet</url-pattern>
 	</servlet-mapping>
 
 	<!-- 目录的servlet -->
 	<servlet>
-
-		<servlet-name>CategoryServlet</servlet-name>
-		<servlet-class>cn.zlb.goods.category.web.CategoryServlet</servlet-class>
+			<servlet-name>CategoryServlet</servlet-name>
+			<servlet-class>cn.zlb.goods.category.web.CategoryServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
-		<servlet-name>CategoryServlet</servlet-name>
-		<url-pattern>/CategoryServlet</url-pattern>
+			<servlet-name>CategoryServlet</servlet-name>
+			<url-pattern>/CategoryServlet</url-pattern>
 	</servlet-mapping>
+	
+	
+	<!-- 购物车的servlet -->
+  <servlet>
+   		<servlet-name>CartItemServlet</servlet-name>
+    	<servlet-class>cn.zlb.goods.cart.servlet.CartItemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    	<servlet-name>CartItemServlet</servlet-name>
+    	<url-pattern>/CartItemServlet</url-pattern>
+  </servlet-mapping>
 
 
 	<!-- 编码过滤器 -->

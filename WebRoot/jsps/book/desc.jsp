@@ -25,7 +25,7 @@
   </head>
   
   <body>
-  <div class="divBookName">Spring实战(第3版)（In Action系列中最畅销的Spring图书，近十万读者学习Spring的共同选择）</div>
+  <div class="divBookName">${book.bname}</div>
   <div>
     <img align="top" src="<c:url value='/${book.image_w }'/>" class="img_image_w"/>
     <div class="divBookDesc">
@@ -60,10 +60,11 @@
 				<td>纸张：${book.paper }</td>
 			</tr>
 		</table>
+		<!--购买按钮  并传递图书bid给servlet  -->
 		<div class="divForm">
-			<form id="form1" action="<c:url value='/jsps/cart/list.jsp'/>" method="post">
-				<input type="hidden" name="method" value=""/>
-				<input type="hidden" name="bid" value=""/>
+			<form id="form1" action="<c:url value='/CartItemServlet'/>" method="post">
+				<input type="hidden" name="method" value="addCartItem"/>
+				<input type="hidden" name="bid" value="${book.bid }"/>
   				我要买：<input id="cnt" style="width: 40px;text-align: center;" type="text" name="quantity" value="1"/>件
   			</form>
   			<a id="btn" href="javascript:$('#form1').submit();"></a>

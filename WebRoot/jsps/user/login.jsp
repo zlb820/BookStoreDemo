@@ -94,7 +94,7 @@
 									<td><input class="input yzm" type="text" name="verifyCode"
 										id="verifyCode" value="" /> <img id="vCode"
 										src="<c:url value="/VerifyCodeServlet"/>" /> <a
-										id="verifyCode" href="">换张图</a></td>
+										id="verifyCode" href="javascript:_change()">换张图</a></td>
 								</tr>
 								<tr>
 									<td height="20px">&nbsp;</td>

@@ -36,6 +36,7 @@ public class BookDao {
 		 
 		return book;
 	}
+	
 	//--------------------------------------------------------------------------
 	/**
 	 * 1.0按分类目录查询
@@ -72,8 +73,9 @@ public class BookDao {
 	 * @throws SQLException 
 	 */
 	public PagerBean<Book> findByBookAuthor(String author,int pc) throws SQLException{
+		System.out.println("author finding");
 		List<Expression> list=new ArrayList<Expression>();
-		list.add(new Expression("author","like","%"+author+"%"	));
+		list.add(new Expression("author","like","%"+author+"%"));
 		return findByCriteria(list, pc);
 		
 	}
@@ -82,14 +84,15 @@ public class BookDao {
 	 * 4.0 按照出版社 模糊查询
 	 */
 	/**
-	 * @param author
+	 * @param press
 	 * @param pc
 	 * @return
 	 * @throws SQLException 
 	 */
 	public PagerBean<Book> findByBookPress(String press,int pc) throws SQLException{
+		System.out.println("press finding");
 		List<Expression> list=new ArrayList<Expression>();
-		list.add(new Expression("press","like","%"+press+"%"	));
+		list.add(new Expression("press","like","%"+press+"%"));
 		return findByCriteria(list, pc);
 		
 	}
@@ -109,7 +112,6 @@ public class BookDao {
 	 * 参数：Expression 表达式 、pc当前页码
 	 * @throws SQLException 
 	 */
-	@SuppressWarnings("unused")
 	private PagerBean<Book>findByCriteria(List<Expression> explist,int pc) throws SQLException{
 		/**
 		 * 1.获得每页记录数  ps 常量
@@ -155,7 +157,7 @@ public class BookDao {
 		  */
 		 //limit 从第一个问号记录的吓一条记录开始，取个数为第二个问号数量的 记录数
 		sql="select * from t_book"+whereSql+"order by orderBy limit ?,?";
-		System.out.println(sql);
+		/*System.out.println(sql);*/
 		//根据页码计算查询记录数，把结果存入params，params 是可变参数，底层是数组，直接传入就好，可以同上面的占位符？一起计算
 		params.add((pc-1)*ps);
 		params.add(ps);

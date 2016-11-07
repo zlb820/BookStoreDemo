@@ -31,7 +31,7 @@
 	<c:forEach items="${pagerbean.beanlist }" var="book">
 		<li>
 			<div class="inner">
-				<a class="pic" href="<c:url value='/BookServlet?method=findByBid&bid=${book.bid } '/>"><img
+				<a class="pic" href="<c:url value='/BookServlet?method=findByBid&bid=${book.bid}'/>"><img
 					src="<c:url value='/${book.image_b }'/>" border="0" /></a>
 				<p class="price">
 					<span class="price_n">&yen;${book.currPrice }</span> <span
@@ -42,18 +42,18 @@
 				</p>
 				<%-- url标签会自动对参数进行url编码 --%>
 				<c:url value="/BookServlet" var="authorUrl">
-					<c:param name="method" value="findByAuthor" />
+					<c:param name="method" value="findByBookAuthor" />
 					<c:param name="author" value="${book.author }" />
 				</c:url>
 				<c:url value="/BookServlet" var="pressUrl">
-					<c:param name="method" value="findByPress" />
+					<c:param name="method" value="findByBookPress" />
 					<c:param name="press" value="${book.press }" />
 				</c:url>
 				<p>
-					<a href="${authorUrl }" name='P_zz' title='${book.author }'>${book.author }</a>
+					<a href="${authorUrl}" name='P_zz' title='${book.author}'>${book.author }</a>
 				</p>
 				<p class="publishing">
-					<span>出 版 社：</span><a href="${pressUrl }">${book.press }</a>
+					<span>出 版 社：</span><a href="${pressUrl}">${book.press}</a>
 				</p>
 				<p class="publishing_time">
 					<span>出版时间：</span>${book.publishtime }</p>

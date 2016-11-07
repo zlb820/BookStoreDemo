@@ -1,11 +1,14 @@
 package cn.zlb.goods.book.sservlet;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.itcast.commons.CommonUtils;
 import cn.itcast.servlet.BaseServlet;
 import cn.zlb.goods.book.domin.Book;
 import cn.zlb.goods.book.service.BookService;
@@ -27,7 +30,7 @@ public class BookServlet  extends BaseServlet{
 	}
 	//--------------------------------------------------------------------------
 	/**
-	 * 按照目录分页查询
+	 * I.按照目录分页查询
 	 * @param req
 	 * @param resp
 	 * @return
@@ -57,6 +60,84 @@ public class BookServlet  extends BaseServlet{
 		return "f:/jsps/book/list.jsp";
 		
 		
+	}
+	/**
+	 * II.按照Author查询
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String  findByBookAuthor(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		 String author=req.getParameter("author");
+		 
+		 int pc=getPc(req);
+		 
+		 PagerBean<Book> pagerbean=service.findByBookAuthor(author, pc);
+		 
+		 String url=getURI(req);
+		 
+		 pagerbean.setUrl(url);
+		 
+		 req.setAttribute("pagerbean", pagerbean);
+		 
+			return "f:/jsps/book/list.jsp";
+	}
+	/**
+	 * III.按照press查询
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String  findByBookPress(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		 String press=req.getParameter("press");
+		 
+		 int pc=getPc(req);
+		 
+		 PagerBean<Book> pagerbean=service.findByBookPress(press, pc);
+		 
+		 String url=getURI(req);
+		 
+		 pagerbean.setUrl(url);
+		 req.setAttribute("pagerbean", pagerbean);
+		  return "f:/jsps/book/list.jsp";
+	}
+	
+	/**
+	 * IV.组合查询 高级查询
+	 */
+	public String combinationSerach(HttpServletRequest req,HttpServletResponse resp)
+	throws ServletException{
+		int pc=getPc(req);
+		Map map=req.getParameterMap();
+		Book book =CommonUtils.toBean(map, Book.class);
+		PagerBean<Book> pagerbean=service.findByCombination(book, pc);
+		String url=getURI(req);
+		pagerbean.setUrl(url);
+		req.setAttribute("pagerbean", pagerbean);
+		return "f:/jsps/book/list.jsp";
+		
+		
+	}
+	
+	public String  findByBookName(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		 String bname=req.getParameter("bname");
+		 
+		 int pc=getPc(req);
+		 
+		 PagerBean<Book> pagerbean=service.findByBookName(bname, pc);
+		 
+		 String url=getURI(req);
+		 
+		 pagerbean.setUrl(url);
+		 req.setAttribute("pagerbean", pagerbean);
+		  return "f:/jsps/book/list.jsp";
 	}
 	/**
 	 * 获取请求的url
