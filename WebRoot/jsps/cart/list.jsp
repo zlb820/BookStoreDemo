@@ -18,9 +18,9 @@
 	-->
 	<script src="<c:url value='/jquery/jquery-1.5.1.js'/>"></script>
 	<script src="<c:url value='/js/round.js'/>"></script>
-	
+	<script type="text/javascript" src='<c:url  value="jsps/js/cart/cartlist.js"></c:url>' ></script>
 	<link rel="stylesheet" type="text/css" href="<c:url value='/jsps/css/cart/list.css'/>">
- 
+ 	 
   </head>
   <body>
 
@@ -56,6 +56,7 @@
 <c:forEach items="${cartItemList }" var="cartItem">
 	<tr align="center">
 		<td align="left">
+			<!--每一个单选框的 值为：cartItemId 以方便取出购物条目信息  -->
 			<input value="${cartItem.cartItemId }" type="checkbox" name="checkboxBtn" checked="checked"/>
 		</td>
 		<td align="left" width="70px">
@@ -66,9 +67,11 @@
 		</td>
 		<td><span>&yen;<span class="currPrice">${cartItem.book.currPrice }</span></span></td>
 		<td>
+			<!--加号 减号 数量 也改为：cartItamId+___  -->
 			<a class="jian" id="${cartItem.cartItemId }Jian"></a><input class="quantity" readonly="readonly" id="${cartItem.cartItemId }Quantity" type="text" value="${cartItem.quantity }"/><a class="jia" id="${cartItem.cartItemId }Jia"></a>
 		</td>
 		<td width="100px">
+			<!--把小计的 id更改为：cartItemnId+Subtotal 以便进行循环和计算  -->
 			<span class="price_n">&yen;<span class="subTotal" id="${cartItem.cartItemId }Subtotal">${cartItem.totalPrice }</span></span>
 		</td>
 		<td>

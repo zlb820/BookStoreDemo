@@ -12,7 +12,7 @@ public class CartItem {
 	private User user;// 所属用户
 	
 	/**
-	 * 计算总价
+	 * 小计 ，同本书总价 =数量*单价；
 	 * @return
 	 */
 	public double getTotalPrice(){
