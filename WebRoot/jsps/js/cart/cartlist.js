@@ -39,6 +39,41 @@ $(function(){
 		}
 	    showtotal();
 	});
+	
+/*	*//**
+	 * 购物车条目  增加 减少数量的 click时间，发送异步请求
+	 */
+	 $(".jian").click(function(){
+		 console.log("加减");
+		//获取当前条目的id，购物车每个标签的id由 该商品的条目 组合拼接而成，
+		 var cartItemId=$(this).attr("id").substring(0,32);
+		 //减少的判断  如果数量小于1 ，那么调用删除方法
+		 var quantity=$("#"+cartItemId+"Quantity").val();
+		 console.log("quantity:" +quantity);
+		 if (quantity==1) {
+			if (confirm("删除该商品？")) {
+				location="/goods/CartItemServlet?method=deleteCartItem&cartitems="+cartItemId;
+			}
+			 
+		}else {
+				//发送异步请求到服务器
+			updateQuantity(cartItemId,quantity-1);
+			}
+	  
+	 });
+	 
+	 $(".jia").click(function(){
+		 var cartItemId=$(this).attr("id").substring(0,32);
+		 
+		 var quantity=$("#"+cartItemId+"Quantity").val();
+		 
+		 updateQuantity(cartItemId,Number(quantity)+1);
+		 
+		 
+	 }); 
+	 
+
+	 
 });
 /*计算总价格*/
 function showtotal(){
@@ -79,9 +114,63 @@ function setJieSuan(bool){
 }
 
 //------------------------------------------------------------------------------ 
+ /*批量删除 拼装所有已选checkbox的 id 发送到服务器*/
+function cartitems(){
+	var array=new Array();
+	$(":checkbox[name=checkboxBtn][checked=true]").each(function(){
+		array.push($(this).val());
+		 
+	});
+	
+	location="/goods/CartItemServlet?method=deleteCartItem&cartitems="+array;
+	console.log(location);
+}
  
  
+//------------------------------------------------------------------------------
+/**
+ * 购物车条目  增加 减少数量的 click时间，发送异步请求
+ */
+
+ function updateQuantity(cartItemId,quantity){
+	 
+	 $.ajax({
+		 async:false,
+		 cache:false,
+		 dataType:"json",
+		 type:"POST",
+		 url:"/goods/CartItemServlet",
+		 data:{method:"modifyQuantity",cartItemId:cartItemId,quantity:quantity},
+		 success:function(result){
+			 //调用成功 重新设置标签值,设置数量
+			 $("#"+cartItemId+"Quantity").val(result.quantity);
+			 //设置小计
+			 $("#"+cartItemId+"Subtotal").text(result.totalPrice);
+			 //重新计算总计
+			 showtotal();
+		 }
+	 		
+		 
+	 });
+	  
+ }
  
+//------------------------------------------------------------------------------
+ /**
+  * 提交已选中的 items信息  ，结算功能
+  */
+ function jiesuan(){
+	 var cartItemIds=new Array();
+	 $(":checkbox[name=checkboxBtn][checked=true]").each(function(){
+		 cartItemIds.push($(this).val());
+	 });
+	 $("#cartItemIds").attr("value",cartItemIds.toString());
+	 var total=$("#total").text();
+	 $("#totalPrice").attr("value",total);
+	 //提交表单
+	 $("#form1").submit();
+	 
+ }
  
  
  

@@ -23,17 +23,7 @@
 #addr{width: 500px; height: 32px;border: 1px solid #7f9db9; padding-left: 10px; line-height: 32px;}
 </style>
 
-<script type="text/javascript">
-	//计算合计
-	$(function() {
-		var total = 0;
-		$(".subtotal").each(function() {
-			total += Number($(this).text());
-		});
-		$("#total").text(round(total, 2));
-	});
-</script>
-  </head>
+ 
   
   <body>
 <form id="form1" action="<c:url value='/jsps/order/ordersucc.jsp'/>" method="post">
@@ -52,37 +42,22 @@
 	</tr>
 
 
-
+<c:forEach items="${cartItemLists }" var="cartItem">
 	<tr align="center">
 		<td align="right">
-			<a class="linkImage" href="<c:url value='/jsps/book/desc.jsp'/>"><img border="0" width="54" align="top" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/></a>
+			<a class="linkImage" href="<c:url value='/jsps/book/desc.jsp'/>"><img border="0" width="54" align="top" src="<c:url value='/${cartItem.book.image_b }'/>"/></a>
 		</td>
 		<td align="left">
-			<a href="<c:url value='/jsps/book/desc.jsp'/>"><span>Spring实战(第3版)（In Action系列中最畅销的Spring图书，近十万读者学习Spring的共同选择）</span></a>
+			<a href="<c:url value='/jsps/book/desc.jsp'/>"><span>${cartItem.book.bname }</span></a>
 		</td>
-		<td>&yen;40.7</td>
+		<td>&yen;${cartItem.book.currPrice }</td>
 		<td>1</td>
 		<td>
-			<span class="price_n">&yen;<span class="subtotal">40.7</span></span>
+			<span class="price_n">&yen;<span class="subtotal">${cartItem.totalPrice}</span></span>
 		</td>
 	</tr>
 	
-	
-	
-	
-	<tr align="center">
-		<td align="right">
-			<a class="linkImage" href="<c:url value='/jsps/book/desc.jsp'/>"><img border="0" width="54" align="top" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/></a>
-		</td>
-		<td align="left">
-			<a href="<c:url value='/jsps/book/desc.jsp'/>"><span>Spring实战(第3版)（In Action系列中最畅销的Spring图书，近十万读者学习Spring的共同选择）</span></a>
-		</td>
-		<td>&yen;40.7</td>
-		<td>1</td>
-		<td>
-			<span class="price_n">&yen;<span class="subtotal">40.7</span></span>
-		</td>
-	</tr>
+ </c:forEach>
 
 
 
@@ -91,7 +66,7 @@
 
 	<tr>
 		<td colspan="6" align="right">
-			<span>总计：</span><span class="price_t">&yen;<span id="total"></span></span>
+			<span>总计：</span><span class="price_t">&yen;<span id="total">${totalPrice}</span></span>
 		</td>
 	</tr>
 	<tr>

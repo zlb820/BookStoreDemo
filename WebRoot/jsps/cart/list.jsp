@@ -23,8 +23,8 @@
  	 
   </head>
   <body>
-
-
+	<c:choose>
+		<c:when test="${empty cartItemList }">
 	<table width="95%" align="center" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="right">
@@ -35,6 +35,12 @@
 			</td>
 		</tr>
 	</table>  
+		
+		</c:when>
+	<c:otherwise>
+	
+	
+
 
 <br/>
 <br/>
@@ -67,15 +73,15 @@
 		</td>
 		<td><span>&yen;<span class="currPrice">${cartItem.book.currPrice }</span></span></td>
 		<td>
-			<!--加号 减号 数量 也改为：cartItamId+___  -->
-			<a class="jian" id="${cartItem.cartItemId }Jian"></a><input class="quantity" readonly="readonly" id="${cartItem.cartItemId }Quantity" type="text" value="${cartItem.quantity }"/><a class="jia" id="${cartItem.cartItemId }Jia"></a>
+			<!--加号 减号 数量 也改为：cartItamId+___  ,增加和减少有click时间，每当点击会发送异步请求到服务其进行异步修改-->
+			<a class="jian"  id="${cartItem.cartItemId }Jian"></a><input class="quantity" readonly="readonly" id="${cartItem.cartItemId }Quantity" type="text" value="${cartItem.quantity }"/><a class="jia" id="${cartItem.cartItemId }Jia"></a>
 		</td>
 		<td width="100px">
 			<!--把小计的 id更改为：cartItemnId+Subtotal 以便进行循环和计算  -->
 			<span class="price_n">&yen;<span class="subTotal" id="${cartItem.cartItemId }Subtotal">${cartItem.totalPrice }</span></span>
 		</td>
 		<td>
-			<a href="<c:url value='/CartItemServlet?method=batchDelete&cartItemIds=${cartItem.cartItemId }'/>">删除</a>
+			<a href="<c:url value='/CartItemServlet?method=deleteCartItem&cartitems=${cartItem.cartItemId }'/>">删除</a>
 		</td>
 	</tr>
 </c:forEach>
@@ -87,7 +93,8 @@
 	
 	<tr>
 		<td colspan="4" class="tdBatchDelete">
-			<a href="javascript:alert('批量删除成功');">批量删除</a>
+			<!-- 返回所有条目的id字符串 -->
+			<a href="javascript:cartitems();">批量删除</a>
 		</td>
 		<td colspan="3" align="right" class="tdTotal">
 			<span>总计：</span><span class="price_t">&yen;<span id="total"></span></span>
@@ -95,14 +102,18 @@
 	</tr>
 	<tr>
 		<td colspan="7" align="right">
-			<a href="<c:url value='/jsps/cart/showitem.jsp'/>" id="jiesuan" class="jiesuan"></a>
+		<!-- 拼接选中的 items字符串 -->
+			<a href="javascript:jiesuan();" id="jiesuan" class="jiesuan"></a>
 		</td>
 	</tr>
 </table>
-	<form id="form1" action="<c:url value='/jsps/cart/showitem.jsp'/>" method="post">
+	<form id="form1" action="<c:url value='/CartItemServlet'/>" method="post">
 		<input type="hidden" name="cartItemIds" id="cartItemIds"/>
-		<input type="hidden" name="method" value="loadCartItems"/>
+		<input type="hidden" name="totalPrice" id="totalPrice"/>
+		<input type="hidden" name="method" value="jiesuan"/>
 	</form>
+	</c:otherwise>
+	</c:choose>
 
 
   </body>

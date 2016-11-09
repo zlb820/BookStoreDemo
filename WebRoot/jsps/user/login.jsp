@@ -74,7 +74,7 @@
 								<tr>
 									<td width="50">用户名</td>
 									<td><input class="input" type="text" name="loginname"
-										id="loginname" /> </td>
+										id="loginname" value="${form.loginname }" /> </td>
 								</tr>
 								<tr>
 									<td height="20">&nbsp;</td>

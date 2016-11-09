@@ -9,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
+
 import cn.itcast.commons.CommonUtils;
 import cn.itcast.servlet.BaseServlet;
 import cn.zlb.goods.book.domin.Book;
@@ -38,6 +40,14 @@ public class CartItemServlet extends BaseServlet {
 			
 			return "f:/jsps/cart/list.jsp";
 	}
+	/**
+	 * 2.0添加购买的物品
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	
 	public String addCartItem(HttpServletRequest req , HttpServletResponse resp )
 			throws ServletException, IOException {
@@ -59,6 +69,68 @@ public class CartItemServlet extends BaseServlet {
 				// 结尾 调用 查询用户购物车方法
 				return  findByUser(req, resp) ;
 				}
+	/**
+	 * 3.0删除cartitem
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String deleteCartItem(HttpServletRequest req , HttpServletResponse resp )
+			throws ServletException, IOException {
+		//请求参数为 String cartitem 字符串
+		String cartitems=req.getParameter("cartitems");
+		service.deleteCartItem(cartitems);
+		return  findByUser(req, resp);
+	}
+	
+	/**
+	 * 4.0 修改购物条目数量
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String modifyQuantity(HttpServletRequest req , HttpServletResponse resp )
+			throws ServletException, IOException {
+		//获取传来的 数量和id
+		String cartitemid=req.getParameter("cartItemId");
+		int quantity =Integer.parseInt(req.getParameter("quantity"));
+		
+		CartItem cartitem=service.updateQuantity(cartitemid, quantity);
+		
+		//更新的结果  返回json数据,封装改变后的物品数量和 小计
+		JsonObject object=new JsonObject();
+		object.addProperty("quantity", cartitem.getQuantity());
+		object.addProperty("totalPrice", cartitem.getTotalPrice());
+		System.out.println("json return :" +object.toString());
+		resp.getWriter().print(object.toString());
+		return "";
+		
+	}
+	/**
+	 * 5.0 结算流程  
+	 * 获取 cartitems 字符串 ，并查找
+	 * 返回查询结果 
+	 * 返回 总计
+	 *shouitem.jsp 显示订单
+	 */
+	public String  jiesuan(HttpServletRequest req , HttpServletResponse resp )
+			throws ServletException, IOException {
+	String cartItems=req.getParameter("cartItemIds");
+	//获得选中 cartitem的总计
+	 String totalPrice=req.getParameter("totalPrice");
+	 double total=Double.parseDouble(totalPrice);
+	 System.out.println(total);
+	List<CartItem> cartItemLists=service.findCheckedItems(cartItems);
+	
+	req.setAttribute("cartItemLists", cartItemLists);
+	req.setAttribute("totalPrice", total);
+	
+		return "f:/jsps/cart/showitem.jsp";
+	}
 
 }
 

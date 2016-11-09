@@ -54,8 +54,54 @@ public class CartItemService {
 		}
 		
 	}
-	
-	 
+	/**
+	 * 3.0删除cartitem
+	 */
+	public void deleteCartItem(String cartitems){
+		
+		try {
+			dao.deleteCartItem(cartitems);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	 /**
+	  * 4.0
+	  * 	增加减少订单数量的实现
+	  * 先更新数量，然后再次查找并返回CartItem 
+	  * @param cartitemid
+	  * @return
+	  */
+	public CartItem updateQuantity(String cartItemId,int quantity){
+		CartItem cartitem=null;
+		try {
+			dao.updateBookInCart(cartItemId, quantity);
+			
+			cartitem = dao.findByCartItemId(cartItemId);
+			return cartitem;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cartitem;
+	}
+	/**
+	 * 5.0 结算 提交选中的 多个 cartitem
+	 * @param cartItemId
+	 * @return
+	 */
+	public List<CartItem> findCheckedItems(String cartItemId){
+		List<CartItem> list=null;
+		try {
+			return list=dao.findCheckedCartItem(cartItemId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 }
 
 

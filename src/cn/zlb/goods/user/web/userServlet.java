@@ -155,7 +155,7 @@ public class userServlet extends BaseServlet {
 		User formuser = CommonUtils.toBean(req.getParameterMap(), User.class);
 
 		// 2.对登陆的用户信息进行后台校验
-			validateLogin vl=new validateLogin();
+			/*validateLogin vl=new validateLogin();
 		   Map<String, String>errors=vl.checkLogin(formuser, service, req.getSession()); //如果map大于零那么登录信息校验成功
 		   if (errors.size()>0) { 
 		   //有错误返回登录 
@@ -164,7 +164,7 @@ public class userServlet extends BaseServlet {
 		   //把用户信息返回，用于回显
 			   req.setAttribute("form", formuser);
 				return "f:/jsps/user/login.jsp";
-		  }
+		  }*/
 		
 
 		// 3.0校验无误 ，数据库查询

@@ -30,7 +30,7 @@ public class CartItemDao {
 		List<Map<String, Object>>  map=qr.query(sql, new MapListHandler(), uid);
 		
 		return toCartItemList(map);
-		
+ 
 	}
 	/**
 	 * 2.0购物的流程 
@@ -65,6 +65,58 @@ public class CartItemDao {
 		qr.update(sql,param);
 		
 	}
+	
+	/**
+	 * 3.0删除cartitem
+	 * 实现功能 删除一条记录和 多条记录 
+	 * ：参数是String类型 ：gaistring类型是多个cartItemId连接的结果
+	 * ：定义拼装sql 方法，多少个参数 就添加多少个？
+	 * @throws SQLException 
+	 */
+	
+	public void deleteCartItem(String cartitems) throws SQLException{
+		Object params[]=cartitems.split(",");
+		//计算数组的长度 ，决定？ 参数的个数
+		String str=toSql(params.length);
+		String sql="delete from t_cartitem where "+str;
+		System.out.println("delete sql:"+sql);
+		//取得参数
+		
+		qr.update(sql,params);
+	}
+	/**
+	 * 4.0 购物车条目数量的修改
+	 * 		1》购物条目数量的修改
+	 * 		2》查询修改后的购物条目
+	 * @throws SQLException 
+	 */
+		//购物车中条目的查询
+	public CartItem findByCartItemId(String cartItemId) throws SQLException{
+		String sql="select * from t_cartitem c , t_book b where c.bid=b.bid and c.cartItemId=?";
+		
+	    Map<String, Object> map=qr.query(sql, new MapHandler(),cartItemId);
+	     
+		return toCartItem(map); 
+	}
+	
+	/**
+	 * 5.0查找选中的物品项  返回  结算功能
+	 * 传入 cartItemId 字符创，需要解析 拼接
+	 * @param cartItemId
+	 * @return
+	 * @throws SQLException 
+	 */
+	public List<CartItem> findCheckedCartItem(String cartItemId) throws SQLException{
+		Object params[]=cartItemId.split(",");
+		
+		String strsql=toSql(params.length);
+		
+		String sql="select * from t_cartitem t ,t_book b where t.bid=b.bid and  "+strsql;
+		System.out.println("结算sql："+sql);
+		List<Map<String, Object>> map=qr.query(sql, new MapListHandler(),params);
+		return toCartItemList(map);
+	}
+	
 	/**
 	 * 辅助工具类1：
 	 * 把查询出来的map结果映射到bean中，相当于cartitem.setString();
@@ -96,10 +148,35 @@ public class CartItemDao {
 			 cartItemList.add(cartItem);
 		 		}
 		return  cartItemList;
-		 	
-		 
+  
 	 }
+	 
+	 /**
+	  * 辅助工具类3：
+	  * 拼装sql方法
+	   *
+	  */
+public String toSql(int len){
+	StringBuilder str=new StringBuilder("cartItemId in (");
+	 for (int i = 0; i < len; i++) {
+		str.append("?");
+		if (i<(len-1)) {
+			str.append(",");
+		}
+	}
+	 str.append(")");
+	return  str.toString();
+} 
 }
+
+
+
+
+
+
+
+
+
 
 
 
