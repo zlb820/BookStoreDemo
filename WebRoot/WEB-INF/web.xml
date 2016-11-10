@@ -40,6 +40,7 @@
 			<url-pattern>/VerifyCodeServlet</url-pattern>
 	</servlet-mapping>
 
+
 	<!-- 目录的servlet -->
 	<servlet>
 			<servlet-name>CategoryServlet</servlet-name>
@@ -56,9 +57,23 @@
    		<servlet-name>CartItemServlet</servlet-name>
     	<servlet-class>cn.zlb.goods.cart.servlet.CartItemServlet</servlet-class>
   </servlet>
+  
   <servlet-mapping>
     	<servlet-name>CartItemServlet</servlet-name>
     	<url-pattern>/CartItemServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- 订单servlet -->
+  <servlet>
+     
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>cn.zlb.goods.order.servlet.OrderServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>OrderServlet</servlet-name>
+    <url-pattern>/OrderServlet</url-pattern>
   </servlet-mapping>
 
 

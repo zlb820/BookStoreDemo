@@ -29,7 +29,7 @@ public class CartItemService {
 	 * 2.0购物 添加商品实现
 	 */
 	public void addCartItem(CartItem cartitem){
-		 System.out.println("添加购买图书");
+		 
 		try {
 			CartItem _cartitem=dao.findBookInCart(cartitem.getUser().getUid(),
 					cartitem.getBook().getBid());
@@ -49,7 +49,7 @@ public class CartItemService {
 				dao.insertInCart(cartitem);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		 
 			e.printStackTrace();
 		}
 		

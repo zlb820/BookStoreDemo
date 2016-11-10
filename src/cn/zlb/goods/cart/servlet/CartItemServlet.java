@@ -128,7 +128,8 @@ public class CartItemServlet extends BaseServlet {
 	
 	req.setAttribute("cartItemLists", cartItemLists);
 	req.setAttribute("totalPrice", total);
-	
+	//把所有的cartitem id字符串 返回到cart/showitem
+	req.setAttribute("cartItemIds", cartItems);
 		return "f:/jsps/cart/showitem.jsp";
 	}
 

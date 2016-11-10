@@ -51,7 +51,7 @@ a:hover {
 			<c:otherwise>
 		     用户:${sessionScope.sessionuser.loginname} &nbsp;&nbsp;|&nbsp;&nbsp;
 		  <a href="<c:url value='/CartItemServlet?method=findByUser'/>" target="body">我的购物车</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-		  <a href="<c:url value='/jsps/order/list.jsp'/>" target="body">我的订单</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		  <a href="<c:url value='/OrderServlet?method=findUserOrder'/>" target="body">我的订单</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		  <a href="<c:url value=''/>" target="body">修改密码</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		  <a href="<c:url value='/userServlet?method=quitLogin'/>" target="_parent">退出</a>
 			</c:otherwise>

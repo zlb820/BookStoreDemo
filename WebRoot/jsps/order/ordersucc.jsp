@@ -26,11 +26,11 @@
 	<img src="<c:url value='/images/duihao.jpg'/>" class="img"/>
 	<dl>
 		<dt>订单编号</dt>
-		<dd>E3A1EB6D0543489F9729B2B5BC5DB365</dd>
+		<dd>${order.oid }</dd>
 		<dt>合计金额</dt>
-		<dd><span class="price_t">&yen;203.5</span></dd>
+		<dd><span class="price_t">&yen;${order.total }</span></dd>
 		<dt>收货地址</dt>
-		<dd>北京市 昌平区 西三旗 金燕龙办公楼1层 传智播客 张三爷</dd>
+		<dd>${order.address }</dd>
 	</dl>
 	<span>ITCAST书城感谢您的支持，祝您购物愉快！</span>
 	<a href="<c:url value='/jsps/order/pay.jsp'/>" id="linkPay">支付</a>
