@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -20,7 +21,41 @@ import cn.zlb.goods.pager.PagerBean;
 import cn.zlb.goods.order.tools.*;
 public class OrderDao {
 private TxQueryRunner qr=new TxQueryRunner();
+/**
+ * 4.0查询订单状态 
+ * 
+ * 4.1 修改订单状态
+ * @param ord
+ * @return
+ * @throws SQLException 
+ */
+public int viewOrderStatus(Order ord) throws SQLException{
+	String sql="select status from t_order where oid=?";
+	Number status=(Number) qr.query(sql, new ScalarHandler(),ord.getOid());
+	return status.intValue();
+	
+}
 
+
+public void changeOrderStatus(Order ord) throws SQLException{
+	String sql="update t_order set status=? where oid =?";
+	qr.update(sql,ord.getStatus(),ord.getOid());
+	
+}
+
+/**
+ * 3.0 查询订单详情
+ * @param Order
+ * @return
+ * @throws SQLException 
+ */
+public Order viewOrder(Order ord ) throws SQLException{
+	String sql="select * from t_order where oid = ?";
+	Order order =(Order) qr.query(sql, new BeanHandler<Order>(Order.class),ord.getOid());
+	//把所有的 Order的 OrderItem 添加到Order中
+	 findOrderItems(order);
+	return  order;
+}
 /**
  * 2.0 添加 一个 Order
  * 1》 首先把Order订单 信息插入

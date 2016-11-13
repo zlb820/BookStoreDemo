@@ -86,4 +86,25 @@
 		<filter-name>EncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<!--登陆过滤器  -->
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>cn.zlb.goods.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/jsps/cart/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/jsps/order/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<servlet-name>OrderServlet</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<servlet-name>CartItemServlet</servlet-name>
+	</filter-mapping>
 </web-app>

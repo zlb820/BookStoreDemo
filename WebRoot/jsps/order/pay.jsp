@@ -29,12 +29,12 @@ $(function() {
   
   <body>
 <div class="divContent">
-	<span class="spanPrice">支付金额：</span><span class="price_t">&yen;203.5</span>
-	<span class="spanOid">编号：E3A1EB6D0543489F9729B2B5BC5DB365</span>
+	<span class="spanPrice">支付金额：</span><span class="price_t">&yen;${order.total }</span>
+	<span class="spanOid">编号：${order.oid }</span>
 </div>
 <form action="<c:url value='/OrderServlet'/>" method="post" id="form1" target="_top">
-<input type="hidden" name="method" value=""/>
-<input type="hidden" name="oid" value=""/>
+<input type="hidden" name="method" value="pay"/>
+<input type="hidden" name="oid" value="${order.oid }"/>
 <div class="divBank">
 	<div class="divText">选择网上银行</div>
 	<div style="margin-left: 20px;">
@@ -118,7 +118,7 @@ $(function() {
 	  </div>
 	</div>
 	<div style="margin: 40px;">
-		<a href="javascript:alert('支付成功！');" class="linkNext">下一步</a>
+		<a href="javascript:void $('#form1').submit();" class="linkNext">下一步</a>
 	</div>
 </div>
 </form>
