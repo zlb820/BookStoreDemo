@@ -41,15 +41,16 @@
     <h3>添加2级分类</h3>
     <h1></h1>
     <p style="font-weight: 900; color: red">${msg }</p>
-    <form action="<c:url value='/adminjsps/admin/category/list.jsp'/>" method="post" onsubmit="return checkForm()">
-    	<input type="hidden" name="method" value='addTwoLevel'/>
+    <form action="<c:url value='/admin/AdminCategoryServlet'/>" method="post" onsubmit="return checkForm()">
+    	<input type="hidden" name="method" value='addCategoryChild'/>
     	分类名称：<input type="text" name="cname" id="cname"/><br/>
     	一级分类：<select name="pid" id="pid">
     		<option value="">===选择1级分类===</option>
-    		<option value="1">程序设计</option>
-    		<option value="2">办公室用书</option>
-    		<option value="3">图形 图像 多媒体</option>
-    		<option value="4">操作系统/系统开发</option>
+    		<c:forEach items="${categoryParentList }" var="parent">
+    		<!--  判断如果 查询出的cid  和  点击时  传递的 pid 相同  那么选中-->
+    		<option value="${parent.cid }"  <c:if test="${pid eq parent.cid }">selected="selected"</c:if> >${parent.cname }</option>
+    		
+    		 </c:forEach>
     	</select><br/>
     	分类描述：<textarea rows="5" cols="50" name="desc" id="desc"></textarea><br/>
     	<input type="submit" value="添加二级分类"/>

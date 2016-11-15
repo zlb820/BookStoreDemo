@@ -29,147 +29,28 @@
     		<th>描述</th>
     		<th>操作</th>
     	</tr>
-    	
-    	
+    	<!-- 循环遍历  目录 -->
+   <c:forEach items="${categoryList }" var="parent">
     	<tr class="trOneLevel">
-    		<td width="200px;">程序设计</td>
-    		<td>程序设计相关分类</td>
+    		<td width="200px;">${parent.cname }</td>
+    		<td>${parent.desc }</td>
     		<td width="200px;">
-    		  <a href="<c:url value='/adminjsps/admin/category/add2.jsp'/>">添加二级分类</a>
+    		  <a href="<c:url value='/admin/AdminCategoryServlet?method=findCategoryParent&pid=${parent.cid }'/>">添加二级分类</a>
     		  <a href="<c:url value='/adminjsps/admin/category/edit.jsp'/>">修改</a>
     		  <a onclick="return confirm('您是否真要删除该一级分类？')" href="javascript:alert('删除一级分类成功！');">删除</a>
     		</td>
     	</tr>
+    	<c:forEach items="${parent.child }" var="children">
     	<tr class="trTwoLevel">
-    		<td>Java Javascript</td>
-    		<td>Java Javascript相关分类</td>
+    		<td>${children.cname }</td>
+    		<td>${children.desc }</td>
     		<td width="200px;" align="right">
     		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
     		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
     		</td>
     	</tr>
-      	<tr class="trTwoLevel">
-    		<td>JSP</td>
-    		<td>JSP相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-      	<tr class="trTwoLevel">
-    		<td>C C++ VC VC++</td>
-    		<td>C C++ VC VC++相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-
-
-
-
-    	<tr class="trOneLevel">
-    		<td width="200px;">办公室用书</td>
-    		<td>办公室用书相关分类</td>
-    		<td width="200px;">
-    		  <a href="<c:url value='/adminjsps/admin/category/add2.jsp'/>">添加二级分类</a>
-    		  <a href="<c:url value='/adminjsps/admin/category/edit.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该一级分类？')" href="javascript:alert('删除一级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-    	<tr class="trTwoLevel">
-    		<td>微软Office</td>
-    		<td>微软Office相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-      	<tr class="trTwoLevel">
-    		<td>计算机初级入门</td>
-    		<td>计算机初级入门相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-
-    	
-    	<tr class="trOneLevel">
-    		<td width="200px;">图形 图像 多媒体</td>
-    		<td>图形 图像 多媒体相关分类</td>
-    		<td width="200px;">
-    		  <a href="<c:url value='/adminjsps/admin/category/add2.jsp'/>">添加二级分类</a>
-    		  <a href="<c:url value='/adminjsps/admin/category/edit.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该一级分类？')" href="javascript:alert('删除一级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-    	<tr class="trTwoLevel">
-    		<td>Photoshop</td>
-    		<td>Photoshop相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-      	<tr class="trTwoLevel">
-    		<td>3DS MAX</td>
-    		<td>3DS MAX相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-      	<tr class="trTwoLevel">
-    		<td>网页设计</td>
-    		<td>网页设计相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-       	<tr class="trTwoLevel">
-    		<td>Flush</td>
-    		<td>Flush相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-    	
-    	<tr class="trOneLevel">
-    		<td width="200px;">操作系统/系统开发</td>
-    		<td>操作系统/系统开发相关分类</td>
-    		<td width="200px;">
-    		  <a href="<c:url value='/adminjsps/admin/category/add2.jsp'/>">添加二级分类</a>
-    		  <a href="<c:url value='/adminjsps/admin/category/edit.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该一级分类？')" href="javascript:alert('删除一级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-    	<tr class="trTwoLevel">
-    		<td>Windows</td>
-    		<td>Windows相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-      	<tr class="trTwoLevel">
-    		<td>Linux</td>
-    		<td>Linux相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>
-      	<tr class="trTwoLevel">
-    		<td>系统开发</td>
-    		<td>系统开发相关分类</td>
-    		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
-    		</td>
-    	</tr>  	      	
+    	</c:forEach>
+      	 </c:forEach> 	      	
 
     </table>
   </body>

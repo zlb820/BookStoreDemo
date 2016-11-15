@@ -70,11 +70,12 @@
     <servlet-name>OrderServlet</servlet-name>
     <servlet-class>cn.zlb.goods.order.servlet.OrderServlet</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>OrderServlet</servlet-name>
     <url-pattern>/OrderServlet</url-pattern>
   </servlet-mapping>
+
+
 
 
 	<!-- 编码过滤器 -->
@@ -107,4 +108,33 @@
 		<filter-name>LoginFilter</filter-name>
 		<servlet-name>CartItemServlet</servlet-name>
 	</filter-mapping>
+	
+	
+	<!-- admin目录管理servlet -->
+  <servlet>
+    <servlet-name>AminCategoryServlet</servlet-name>
+    <servlet-class>cn.zlb.goods.admin.category.servlet.AminCategoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AminCategoryServlet</servlet-name>
+    <url-pattern>/admin/AdminCategoryServlet</url-pattern>
+  </servlet-mapping>
+	
+	
+	<!--admin登陆servlet  -->
+	<servlet>
+		<servlet-name>AdminServlet</servlet-name>
+		<servlet-class>cn.zlb.goods.admin.admin.servlet.AdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminServlet</servlet-name>
+		<url-pattern>/admin/AdminServlet</url-pattern>
+	</servlet-mapping>
 </web-app>
+
+
+
+
+
+
+

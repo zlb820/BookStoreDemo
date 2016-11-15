@@ -37,7 +37,7 @@
     <h3>添加1级分类</h3>
     <h1></h1>
     <p style="font-weight: 900; color: red">${msg }</p>
-    <form action="<c:url value='/adminjsps/admin/category/list.jsp'/>" method="post" onsubmit="return checkForm()">
+    <form action="<c:url value='/admin/AdminCategoryServlet?method=addCategoryParent'/>" method="post" onsubmit="return checkForm()">
     	<input type="hidden" name="method" value="addOneLevel"/>
     	分类名称：<input type="text" name="cname" id="cname"/><br/>
     	分类描述：<textarea rows="5" cols="50" name="desc" id="desc"></textarea><br/>

@@ -6,11 +6,50 @@ import java.util.Map;
 
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
+import cn.itcast.commons.CommonUtils;
 import cn.itcast.jdbc.TxQueryRunner;
 import cn.zlb.goods.category.domin.Category;
 import cn.zlb.goods.category.tools.CategoryTools;
 public class CategoryDao {
 	private TxQueryRunner qr=new TxQueryRunner();
+	
+	
+	/**
+	 * 3.0查找所有的一级分类 
+	 * @return
+	 * @throws SQLException 
+	 */
+	public List<Category >findCategoryParent() throws SQLException{
+		String sqlStr="select * from t_category where pid is null";
+		List<Map<String, Object>> categoryMapList=qr.query(sqlStr, new MapListHandler());
+		List<Category> categoryList=CategoryTools.toCategoryList(categoryMapList);
+		return categoryList;
+	} 
+	
+	/**
+	 * 2.0添加目录
+	 * 1》判断Category的pid是否为空
+	 * 2》为空是一级目录：pid赋值为null
+	 * 3》不为空 是二级目录：赋值响应pid
+	 * @param cate
+	 * @throws SQLException 
+	 */
+	public void addCategory(Category cate) throws SQLException{
+		//desc需要转移 ，desc是sql中排序的关键字
+		String sqlStr="insert into t_category (cid,cname,pid,`desc`) values (?,?,?,?)";
+		String pid=null;
+		if (cate.getParent()!=null) {
+			pid=cate.getParent().getCid();
+		}
+		Object params[]={cate.getCid(),cate.getCname(),pid,cate.getDesc()};
+		qr.update(sqlStr,params);
+		 
+	}
+	/**
+	 * 1.0查找目录
+	 * @return
+	 * @throws SQLException
+	 */
 	//one:查找一级目录结构
 	public List<Category> findCategory() throws SQLException{
 		//1.0 查询出所有一级分类
