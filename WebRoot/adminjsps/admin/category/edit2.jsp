@@ -41,18 +41,18 @@
     <h3>修改2级分类</h3>
     <h1></h1>
     <p style="font-weight: 900; color: red">${msg }</p>
-    <form action="<c:url value='/adminjsps/admin/category/list.jsp'/>" method="post" onsubmit="return checkForm()">
-    	<input type="hidden" name="method" value="editTwoLevel"/>
-    	<input type="hidden" name="cid" value=""/>
-    	分类名称：<input type="text" name="cname" value="Java Javascript" id="cname"/><br/>
+    <form action="<c:url value='/admin/AdminCategoryServlet'/>" method="post" onsubmit="return checkForm()">
+    	<input type="hidden" name="method" value="changeChild"/>
+    	<input type="hidden" name="cid" value="${category.cid }"/>
+    	分类名称：<input type="text" name="cname" value="${category.cname }" id="cname"/><br/>
     	一级分类：<select name="pid" id="pid">
     		<option value="">===选择1级分类===</option>
-    		<option value="1" selected='selected'>程序设计</option>
-    		<option value="2">办公室用书</option>
-    		<option value="3">图形 图像 多媒体</option>
-    		<option value="4">操作系统/系统开发</option>
+    	<c:forEach items="${categoryParent }" var="parent">
+    	<!-- 判断如果 查询出的二级分类的父id 等于 一级分类 的 id 那么选中 -->
+    		<option value="${parent.cid }"  <c:if test="${parent.cid eq category.parent.cid }">selected="selected"</c:if> >${parent.cname }</option>
+    	</c:forEach>		 
     	</select><br/>
-    	分类描述：<textarea rows="5" cols="50" name="desc" id="desc">Java Javascript相关分类</textarea><br/>
+    	分类描述：<textarea rows="5" cols="50" name="desc" id="desc">${category.desc }</textarea><br/>
     	<input type="submit" value="修改二级分类"/>
     	<input type="button" value="返回" onclick="history.go(-1)"/>
     </form>

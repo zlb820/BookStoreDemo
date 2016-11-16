@@ -111,4 +111,19 @@ public class BookService {
 		return pagerbean;
 		
 	}
-}	
+	
+	/**
+	 * 5.0查找商品数量
+	 */
+	public int findBookCountByCid(String cid){
+	int i=0;
+	try {
+		i=dao.findBookCountByCid(cid);
+		return i;
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return i;
+	}
+}

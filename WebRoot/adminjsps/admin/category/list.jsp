@@ -36,8 +36,8 @@
     		<td>${parent.desc }</td>
     		<td width="200px;">
     		  <a href="<c:url value='/admin/AdminCategoryServlet?method=findCategoryParent&pid=${parent.cid }'/>">添加二级分类</a>
-    		  <a href="<c:url value='/adminjsps/admin/category/edit.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该一级分类？')" href="javascript:alert('删除一级分类成功！');">删除</a>
+    		  <a href="<c:url value='/admin/AdminCategoryServlet?method=changeParentPre&pid=${parent.cid }'/>">修改</a>
+    		  <a onclick="return confirm('您是否真要删除该一级分类？')" href='<c:url value='/admin/AdminCategoryServlet?method=deleteParent&pid=${parent.cid }'></c:url>'>删除</a>
     		</td>
     	</tr>
     	<c:forEach items="${parent.child }" var="children">
@@ -45,8 +45,9 @@
     		<td>${children.cname }</td>
     		<td>${children.desc }</td>
     		<td width="200px;" align="right">
-    		  <a href="<c:url value='/adminjsps/admin/category/edit2.jsp'/>">修改</a>
-    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="javascript:alert('删除二级分类成功！');">删除</a>
+    		<!--  查找当前二级分类-->
+    		  <a href="<c:url value='/admin/AdminCategoryServlet?method=changeChildPre&cid=${children.cid }'/>">修改</a>
+    		  <a onclick="return confirm('您是否真要删除该二级分类？')" href="<c:url value='/admin/AdminCategoryServlet?method=deleteChild&cid=${children.cid }'></c:url>">删除</a>
     		</td>
     	</tr>
     	</c:forEach>

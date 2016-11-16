@@ -107,6 +107,21 @@ public class BookDao {
 		list.add(new Expression("press","like","%"+book.getPress()+"%"));
 		return findByCriteria(list, pc);
 	}
+	
+	/**
+	 * 6.0查找分类下是否存在商品
+	 * @throws SQLException 
+	 * 
+	 */
+	
+	public int findBookCountByCid(String cid) throws SQLException{
+		
+		String sqlStr="select count(*) from t_book where cid=?";
+		Number num=(Number) qr.query(sqlStr, new ScalarHandler(),cid);
+		return num==null?0:num.intValue();
+	}
+	
+	
 	/**
 	 * sql查询的通用类
 	 * 参数：Expression 表达式 、pc当前页码
