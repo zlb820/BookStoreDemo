@@ -36,8 +36,8 @@
   <p style="font-weight: 900; color: red">${msg }</p>
 <form action="<c:url value='/admin/AdminServlet'/>" method="post" onsubmit="return checkForm()">
 	<input type="hidden" name="method" value="login"/>
-	管理员账户：<input type="text" name="adminname" value="" id="adminname"/><br/>
-	密　　　码：<input type="password" name="adminpwd" id="adminpwd"/><br/>
+	管理员账户：<input type="text" name="adminname" value="liubei" id="adminname"/><br/>
+	密　　　码：<input type="password" name="adminpwd" id="adminpwd" value="123"/><br/>
 	<input type="submit" value="进入后台"/>
 </form>
   </body>

@@ -130,6 +130,27 @@
 		<servlet-name>AdminServlet</servlet-name>
 		<url-pattern>/admin/AdminServlet</url-pattern>
 	</servlet-mapping>
+	
+	<!--  admin图书上传相关servlet，没有继承自BaseServlet-->
+  <servlet>
+    <servlet-name>AdminBookServlet</servlet-name>
+    <servlet-class>cn.zlb.goods.admin.book.servlet.AdminBookServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>AdminBookServlet</servlet-name>
+    <url-pattern>/admin/AdminBookServlet</url-pattern>
+  </servlet-mapping>
+  <!-- admin图书管理servlet -->
+  <servlet>
+    <servlet-name>AdminAddBookServlet</servlet-name>
+    <servlet-class>cn.zlb.goods.admin.book.servlet.AdminAddBookServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminAddBookServlet</servlet-name>
+    <url-pattern>/admin/AdminAddBookServlet</url-pattern>
+  </servlet-mapping>
+
 </web-app>
 
 
