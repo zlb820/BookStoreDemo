@@ -13,6 +13,20 @@ import cn.zlb.goods.category.domin.Category;
 public class CategoryService {
 	private  CategoryDao dao=new CategoryDao();
 	
+	/**
+	 * 7.0查询该一级目录下的所有二级目录
+	 * @param cid
+	 * @return
+	 */
+	public List<Category> findChidCategory(String cid){
+		List<Category> categoryChildList=null;
+		try {
+			return categoryChildList=dao.findChidCategory(cid);
+		} catch (SQLException e) {
+			 e.printStackTrace();
+		}
+		return categoryChildList;
+	}
 	
 	/**
 	 * 6.0删除分类 ，

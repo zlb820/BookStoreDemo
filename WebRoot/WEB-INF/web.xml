@@ -87,6 +87,8 @@
 		<filter-name>EncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	
 	<!--登陆过滤器  -->
 	<filter>
 		<filter-name>LoginFilter</filter-name>
@@ -109,7 +111,19 @@
 		<servlet-name>CartItemServlet</servlet-name>
 	</filter-mapping>
 	
-	
+	<!-- admin 过滤器 -->
+	<filter>
+		<filter-name>AdminFilter</filter-name>
+		<filter-class>cn.zlb.goods.filter.AdminFilter</filter-class>
+		 
+	</filter>
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/adminjsps/admin/*</url-pattern>
+		<servlet-name>AminCategoryServlet</servlet-name>
+		<servlet-name>AdminBookServlet</servlet-name>
+		<servlet-name>AdminOrderServlet</servlet-name>
+	</filter-mapping>
 	<!-- admin目录管理servlet -->
   <servlet>
     <servlet-name>AminCategoryServlet</servlet-name>
@@ -146,9 +160,20 @@
     <servlet-name>AdminAddBookServlet</servlet-name>
     <servlet-class>cn.zlb.goods.admin.book.servlet.AdminAddBookServlet</servlet-class>
   </servlet>
+ 
   <servlet-mapping>
     <servlet-name>AdminAddBookServlet</servlet-name>
     <url-pattern>/admin/AdminAddBookServlet</url-pattern>
+  </servlet-mapping>
+  
+  <!-- order订单管理 -->
+  <servlet>
+    <servlet-name>AdminOrderServlet</servlet-name>
+    <servlet-class>cn.zlb.goods.admin.order.servlet.AdminOrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminOrderServlet</servlet-name>
+    <url-pattern>/admin/AdminOrderServlet</url-pattern>
   </servlet-mapping>
 
 </web-app>

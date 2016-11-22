@@ -16,7 +16,7 @@ public class BookService {
 	public Book findById(String bid )   {
 		Book book=null;
 		try {
-			book = dao.findById(bid );
+			book = dao.findById(bid);
 		} catch (SQLException e) {
 		   e.printStackTrace();
 		}
@@ -111,7 +111,7 @@ public class BookService {
 		return pagerbean;
 		
 	}
-	
+	//-------------------------------后台方法-------------------------------------
 	/**
 	 * 5.0查找商品数量
 	 */
@@ -125,5 +125,44 @@ public class BookService {
 		e.printStackTrace();
 	}
 	return i;
+	}
+	
+	/**
+	 * 6.0删除商品
+	 */
+	public void deleBook(String bid)
+	{
+		try {
+			dao.deleteBook(bid);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 7.0 修改图书
+	 */
+	public void editBook(Book book ){
+		
+		try {
+			dao.editBook(book);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 8.0添加图书
+	 * @param book
+	 */
+	public void add(Book book) {
+		
+		try {
+			dao.add(book);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

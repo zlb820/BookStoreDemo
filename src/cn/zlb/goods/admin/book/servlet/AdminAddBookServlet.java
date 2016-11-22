@@ -1,12 +1,16 @@
 package cn.zlb.goods.admin.book.servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import cn.itcast.commons.CommonUtils;
 import cn.itcast.servlet.BaseServlet;
@@ -19,7 +23,90 @@ import cn.zlb.goods.pager.PagerBean;
 public class AdminAddBookServlet extends BaseServlet {
 private CategoryService cservice=new CategoryService();
 private	BookService service=new BookService();
+
+
+/**
+ * 5.0修改图书
+ * @param req
+ * @param resp
+ * @return
+ * @throws ServletException
+ * @throws IOException
+ */
+public String editBook(HttpServletRequest req, HttpServletResponse resp)
+		throws ServletException, IOException {
+	Map  map=req.getParameterMap();
+	Book book=CommonUtils.toBean(map, Book.class);
+	Category category=CommonUtils.toBean(map, Category.class);
 	
+	book.setCategory(category);
+	
+	 service.editBook(book);
+	 req.setAttribute("code", "success");
+	 req.setAttribute("msg", "修改图书信息成功！！");
+	return "f:/adminjsps/admin/book/msg.jsp";}
+/**
+ * 4.0删除图书
+ * attention：删除图书后，项目里的图书的图片也要删除
+ * @param req
+ * @param resp
+ * @return
+ * @throws ServletException
+ * @throws IOException
+ */
+public String deleteBook(HttpServletRequest req, HttpServletResponse resp)
+		throws ServletException, IOException {
+	String bid=req.getParameter("bid");
+	service.deleBook(bid);
+	
+	
+	//找到图书图片文件文件目录
+	Book book=service.findById(bid);
+	//删除图片文件
+	String savePath=this.getServletContext().getRealPath("/");
+	new File(savePath,book.getImage_b()).delete();
+	new File(savePath,book.getImage_w()).delete();
+	
+	req.setAttribute("code", "success");
+	 req.setAttribute("msg", "删除图书信息成功！！");
+	return "f:/adminjsps/admin/book/msg.jsp" ;}
+/**
+ * 3.0添加图书时，加载完一级目录，当选中一个一级目录后，需要异步加载二级目录，联动显示
+ * @param req
+ * @param resp
+ * @return
+ * @throws ServletException
+ * @throws IOException
+ */
+public String checkChild(HttpServletRequest req, HttpServletResponse resp)
+		throws ServletException, IOException {
+	String pid=req.getParameter("pid");
+	List<Category> childList=cservice.findChidCategory(pid);
+	//把查询的二级目录数组转换成json数组返回
+	Gson json=new Gson();
+	String jsonstr=json.toJson(childList);
+	System.out.println(jsonstr);
+	
+	resp.getWriter().print(jsonstr);
+	return null ;}
+	
+/**
+ * 2.0查询 一级目录，在添加图书时，需要把查询出的一级目录返回并显示
+ * @param req
+ * @param resp
+ * @return
+ * @throws ServletException
+ * @throws IOException
+ */
+public String checkParent(HttpServletRequest req, HttpServletResponse resp)
+		throws ServletException, IOException {
+	List<Category> categoryList=cservice.findcategoryParent();
+	req.setAttribute("categoryList", categoryList);
+	
+	return "f:/adminjsps/admin/book/add.jsp";
+	}
+
+
 	/**
 	 * 1.0图书管理 之 查找目录信息
 	 * 可以直接使用前台代码
@@ -44,16 +131,35 @@ public String checkCategory(HttpServletRequest req, HttpServletResponse resp)
 
 
 //-----------------图书分页查询----------------------------------------------------
-
+/**
+ * 图书管理之 查找图书信息
+ */
 
 /**
  * 1.0 按照bid查询,具体的一本书的信息
+ * 后台的查找图书方法
+ *后台编辑图书需要得到图书的 所属目录 的父级目录的信息
+ * ，因此添加多表查询在dao中方法
  */
 public String findByBid(HttpServletRequest req,HttpServletResponse resp)
 throws ServletException{
+	
+	//获取所有一级目录
+	List<Category> parentList=cservice.findcategoryParent();
+	//返回所有一级目录
+	req.setAttribute("parentList", parentList);
+	
+	//查找图书信息并返回
 	String bid=req.getParameter("bid");
 	Book book=service.findById(bid );
 	req.setAttribute("book", book);
+	
+	
+	//获取所有二级目录并返回
+	List<Category> childList=cservice.findChidCategory(book.getCategory().getParent().getCid());
+	req.setAttribute("childList", childList);
+	
+	
 	return "f:/adminjsps/admin/book/desc.jsp";
 	
 	

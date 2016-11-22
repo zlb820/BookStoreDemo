@@ -1,8 +1,8 @@
 $(function(){
-	//计算总计
+	//1.0计算总计
 	showtotal();
 	
-	//全选按钮点击事件
+	//2.0全选按钮点击事件
 	$("#selectAll").click(function(){
 		//获取全选按钮的状态，
 		var status=$("#selectAll").attr("checked");
@@ -16,7 +16,7 @@ $(function(){
 		
 	});
 	
-	/*给所有单选按钮添加click事件
+	/*3.0给所有单选按钮添加click事件
 	 * 1.当已选单选按钮数==0  取消选中 全选取消， 结算按钮失效，总价重新计算
 	 * 2.当已选按钮数==等于按钮总数  全选选中 ，结算有效，总价计算
 	 * 3.其他情况  即：已选按钮<等于按钮总数  全选取消，按钮有效，总价值计算
@@ -41,7 +41,7 @@ $(function(){
 	});
 	
 /*	*//**
-	 * 购物车条目  增加 减少数量的 click时间，发送异步请求
+	 *4.0 购物车条目  增加 减少数量的 click时间，发送异步请求
 	 */
 	 $(".jian").click(function(){
 		 console.log("加减");
@@ -61,7 +61,7 @@ $(function(){
 			}
 	  
 	 });
-	 
+	 //5.0增加购物条目 请求方法
 	 $(".jia").click(function(){
 		 var cartItemId=$(this).attr("id").substring(0,32);
 		 
@@ -160,13 +160,21 @@ function cartitems(){
   * 提交已选中的 items信息  ，结算功能
   */
  function jiesuan(){
+	 //拼接id字符串
 	 var cartItemIds=new Array();
 	 $(":checkbox[name=checkboxBtn][checked=true]").each(function(){
 		 cartItemIds.push($(this).val());
 	 });
+	 
+	 //hidden表单设置id字符串
 	 $("#cartItemIds").attr("value",cartItemIds.toString());
+	 
+	 
+	 //hidden input 内容设置
 	 var total=$("#total").text();
 	 $("#totalPrice").attr("value",total);
+	 
+	 
 	 //提交表单
 	 $("#form1").submit();
 	 

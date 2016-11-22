@@ -99,4 +99,58 @@ public PagerBean<Order> findByUser(String uid,int pc){
 	}
 	return  pagerbean;
 }
+//-----------------------------------------------------------------------------//
+/**
+ * 6.0  后台查询所有订单
+ * @param uid
+ * @param pc
+ * @return
+ */
+public PagerBean<Order> checkOrder(int pc){
+	
+	PagerBean<Order> pagerbean=null;
+	try {
+		JdbcUtils.beginTransaction();
+		pagerbean = dao.checkOrder(pc);
+		JdbcUtils.commitTransaction();
+		return pagerbean;
+	} catch (SQLException e) {
+		try {
+			JdbcUtils.rollbackTransaction();
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
+	}
+	if (pagerbean==null) {
+		System.out.println("user Order is null");
+		return null;
+	}
+	return  pagerbean;
+}
+/**
+ * 7.0按照订单状态查询订单
+ * @param status
+ * @param pc
+ * @return
+ */
+public PagerBean<Order> checkOrder(String status, int pc) {
+	PagerBean<Order> pagerbean=null;
+	try {
+		JdbcUtils.beginTransaction();
+		pagerbean = dao.checkOrder(status,pc);
+		JdbcUtils.commitTransaction();
+		return pagerbean;
+	} catch (SQLException e) {
+		try {
+			JdbcUtils.rollbackTransaction();
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
+	}
+	if (pagerbean==null) {
+		System.out.println("user Order is null");
+		return null;
+	}
+	return  pagerbean;
+}
 }

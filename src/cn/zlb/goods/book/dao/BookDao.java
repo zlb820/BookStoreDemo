@@ -22,16 +22,42 @@ public class BookDao {
 	private TxQueryRunner qr=new TxQueryRunner();
 	/**
 	 * 一：按照bid查询,结果唯一
+	 * 后台的图书查询也用到该方法，但是后天编辑图书需要得到图书的 所属目录 的父级目录的信息
+	 * ，因此添加多表查询
 	 * @throws SQLException 
-	 * 
-	 */
-	public Book findById(String bid ) throws SQLException{
+	 * --------------------------------------
+	 * 最初的代码，现在使用中的是修改后的
+	 * public Book findById(String bid ) throws SQLException{
 		String sql="select * from t_book where bid=?";
 		Map<String, Object> map= qr.query(sql, new MapHandler(),bid);
 		//把map转换为bean
 		Book book =CommonUtils.toBean(map, Book.class);
 		//从map中获取目录id  ，并封装到Category
 		Category cate=CommonUtils.toBean(map, Category.class);
+		book.setCategory(cate);
+		 
+		return book;
+	}
+	----------------------------------------------------
+	 */
+	public Book findById(String bid ) throws SQLException{
+		String sql="select * from t_book b,t_category c where b.cid=c.cid and bid=?";
+		Map<String, Object> map= qr.query(sql, new MapHandler(),bid);
+		
+		//把map转换为bean
+		Book book =CommonUtils.toBean(map, Book.class);
+		
+		//从map中获取目录id  ，并封装到Category
+		Category cate=CommonUtils.toBean(map, Category.class);
+		
+		//从map中获取图书所属目录cate的 父级目录pid，并封装到Category对象中，添加到cate中
+		String pid=(String) map.get("pid");
+		Category cateParent=new Category();
+		cateParent.setCid(pid);
+		//添加擦特Parent、到cate
+		cate.setParent(cateParent);
+		
+		//添加cate到book
 		book.setCategory(cate);
 		 
 		return book;
@@ -107,7 +133,7 @@ public class BookDao {
 		list.add(new Expression("press","like","%"+book.getPress()+"%"));
 		return findByCriteria(list, pc);
 	}
-	
+	//---------------后台使用的方法------------------------------------------------
 	/**
 	 * 6.0查找分类下是否存在商品
 	 * @throws SQLException 
@@ -121,6 +147,52 @@ public class BookDao {
 		return num==null?0:num.intValue();
 	}
 	
+	/**
+	 * 7.0删除商品
+	 * @throws SQLException 
+	 */
+	public void deleteBook(String bid) throws SQLException{
+		String sqlStr="delete from t_book where bid=?";
+		qr.update(sqlStr,bid);
+		
+	}
+	
+	/**
+	 * 8.0 修改商品
+	 * @throws SQLException 
+	 */
+	public void editBook(Book book) throws SQLException{
+		String sqlStr="update t_book set bname=?,author=?,price=?,currPrice=?," +
+				"discount=?,press=?,publishtime=?,edition=?,pageNum=?,wordNum=?," +
+				"printtime=?,booksize=?,paper=?,cid=? where bid=?";
+		
+		Object[] params = {book.getBname(),book.getAuthor(),
+				book.getPrice(),book.getCurrPrice(),book.getDiscount(),
+				book.getPress(),book.getPublishtime(),book.getEdition(),
+				book.getPageNum(),book.getWordNum(),book.getPrinttime(),
+				book.getBooksize(),book.getPaper(), 
+				book.getCategory().getCid(),book.getBid()};
+		qr.update(sqlStr, params);
+		
+	}
+	/**
+	 * 9.0 添加商品
+	 * @throws SQLException 
+	 */
+	public void add(Book book) throws SQLException {
+		String sql = "insert into t_book(bid,bname,author,price,currPrice," +
+				"discount,press,publishtime,edition,pageNum,wordNum,printtime," +
+				"booksize,paper,cid,image_w,image_b)" +
+				" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		Object[] params = {book.getBid(),book.getBname(),book.getAuthor(),
+				book.getPrice(),book.getCurrPrice(),book.getDiscount(),
+				book.getPress(),book.getPublishtime(),book.getEdition(),
+				book.getPageNum(),book.getWordNum(),book.getPrinttime(),
+				book.getBooksize(),book.getPaper(), book.getCategory().getCid(),
+				book.getImage_w(),book.getImage_b()};
+		qr.update(sql, params);
+		
+	}
 	
 	/**
 	 * sql查询的通用类
@@ -198,6 +270,8 @@ public class BookDao {
 		BookDao dap=new BookDao();
 		dap.findByCriteria(list, 1);
 	}*/
+
+
 	
  
  

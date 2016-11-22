@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javassist.compiler.ast.Expr;
+
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
@@ -21,6 +23,30 @@ import cn.zlb.goods.pager.PagerBean;
 import cn.zlb.goods.order.tools.*;
 public class OrderDao {
 private TxQueryRunner qr=new TxQueryRunner();
+
+/**
+ * 5.0 后台查询所有订单
+ * @return
+ * @throws SQLException 
+ */
+public PagerBean<Order> checkOrder(int pc) throws SQLException {
+	 List<Expression> expList=new ArrayList<Expression>();
+	 expList.add(new Expression("1","=","1"));
+	 return findByCriteria(expList, pc);
+}
+/**
+ * 6.0按照订单状态查询
+ * @param status
+ * @param pc
+ * @return
+ * @throws SQLException 
+ */
+public PagerBean<Order> checkOrder(String status, int pc) throws SQLException {
+	 List<Expression> exPre=new ArrayList<Expression>();
+	 exPre.add(new Expression("status","=",status));
+	 return findByCriteria(exPre, pc);
+}
+//----------------------------------------------------------------------------//
 /**
  * 4.0查询订单状态 
  * 
@@ -156,8 +182,8 @@ private PagerBean<Order>findByCriteria(List<Expression> explist,int pc) throws S
 	  * 
 	  */
 	 //limit 从第一个问号记录的吓一条记录开始，取个数为第二个问号数量的 记录数
-	sql="select * from t_order"+whereSql+"order by oid desc limit ?,?";
-	/*System.out.println(sql);*/
+	sql="select * from t_order" +whereSql+ "order by oid desc limit ?,?";
+	/* System.out.println("order sql:"+sql); */
 	//根据页码计算查询记录数，把结果存入params，params 是可变参数，底层是数组，直接传入就好，可以同上面的占位符？一起计算
 	params.add((pc-1)*ps);
 	params.add(ps);
@@ -181,7 +207,7 @@ private PagerBean<Order>findByCriteria(List<Expression> explist,int pc) throws S
 	pagerbean.setPc(pc);
 	pagerbean.setTr(tr);
 	pagerbean.setPs(ps);
-	
+	/*System.out.println("pagerbean:"+pagerbean.toString());*/
 	return pagerbean;
 	
 	
@@ -197,6 +223,9 @@ private void findOrderItems(Order order) throws SQLException {
     order.setOrderItemList(OrderItemTools.toOrderItemList(mapList));
 	
 }
+
+
+
  
  
 }

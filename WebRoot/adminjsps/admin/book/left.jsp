@@ -35,7 +35,7 @@ $(function() {
 </script>
   </head>
   
-  <body onload="load()">
+  <body onload="">
 <div id="menu"></div>
   </body>
 </html>
